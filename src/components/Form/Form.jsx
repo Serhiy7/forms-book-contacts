@@ -1,31 +1,50 @@
 import React, { Component } from "react";
 
-const Form = ({ name, number, onChange, onSubmit }) => (
-  <form onSubmit={onSubmit}>
-    <label>
-      Name
-      <input
-        type="text"
-        name="name"
-        value={name}
-        onChange={onChange}
-        required
-      />
-    </label>
+export default class Form extends Component {
+  state = {
+    name: "",
+    number: "",
+  };
 
-    <label>
-      Number
-      <input
-        type="tel"
-        name="number"
-        value={number}
-        onChange={onChange}
-        required
-      />
-    </label>
+  handleChange = (e) => {
+    const { name, value } = e.currentTarget;
+    this.setState({ [name]: value });
+  };
 
-    <button type="submit">Add contact</button>
-  </form>
-);
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.onAddContact(this.state);
+    this.setState({ name: "", number: "" });
+  };
 
-export default Form;
+  render() {
+    const { name, number } = this.state;
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name
+          <input
+            type="text"
+            name="name"
+            value={name}
+            onChange={this.handleChange}
+            required
+          />
+        </label>
+
+        <label>
+          Number
+          <input
+            type="tel"
+            name="number"
+            value={number}
+            onChange={this.handleChange}
+            required
+          />
+        </label>
+
+        <button type="submit">Add contact</button>
+      </form>
+    );
+  }
+}
