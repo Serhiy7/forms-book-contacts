@@ -9,24 +9,36 @@ class App extends Component {
     contacts: [],
     name: "",
     number: "",
+    filter: "",
   };
 
-  addName = ({ name, tel }) => {
-    const contact = {
-      id: shortid.generate(),
-      text: name,
-      num: tel,
-    };
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
 
-    this.setState(({ contacts }) => ({ contacts: [contact, ...contacts] }));
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { name, number, contacts } = this.state;
+    const newContact = { id: shortid.generate(), name, number };
+    this.setState({
+      contacts: [newContact, ...contacts],
+      name: "",
+      number: "",
+    });
   };
 
   render() {
-    const { contacts } = this.state;
+    const { contacts, name, number } = this.state;
     return (
       <>
-        <Form onSubmit={this.addName} />
-        <Book bookCont={contacts} />
+        <Form
+          name={name}
+          number={number}
+          onChange={this.handleChange}
+          onSubmit={this.handleSubmit}
+        />
+        <Book contacts={contacts} />
       </>
     );
   }

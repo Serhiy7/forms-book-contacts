@@ -1,14 +1,14 @@
+// components/Book.js
 import React from "react";
 
-const Book = ({ bookCont }) => (
+const Book = ({ contacts }) => (
   <ul>
-    {bookCont.map(({ id, text, num }) => (
+    {contacts.map(({ id, name, number }) => (
       <li key={id}>
-        <p>
-          {text} : {num}{" "}
-        </p>
+        {name}: {number}
       </li>
     ))}
   </ul>
 );
+
 export default Book;
